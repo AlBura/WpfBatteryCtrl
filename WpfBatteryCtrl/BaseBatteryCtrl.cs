@@ -7,9 +7,8 @@ using System.Windows.Media;
 ///   Namespace:      WpfBatteryCtrl
 ///   Class:          BaseBatteryCtrl
 ///   Description:    
-///   Author:         Alberto Buranello
-///	  Date: 		  10/08/21 11:46:01 AM
-///   Saipem spa
+///   Author:         AlBura
+///	  Date: 		  10/08/21 
 ///-----------------------------------------------------------------
 
 
