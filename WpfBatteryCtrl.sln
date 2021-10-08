@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30804.86
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfBatteryCtrl.Sample", "WpfBatteryCtrl.Sample\WpfBatteryCtrl.Sample.csproj", "{BE48E143-3C7C-4242-9B1E-3A5C993D760C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfBatteryCtrl", "WpfBatteryCtrl\WpfBatteryCtrl.csproj", "{BA9F8232-3CF7-4DF3-8D35-0B1EBED50B01}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BE48E143-3C7C-4242-9B1E-3A5C993D760C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BE48E143-3C7C-4242-9B1E-3A5C993D760C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BE48E143-3C7C-4242-9B1E-3A5C993D760C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BE48E143-3C7C-4242-9B1E-3A5C993D760C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA9F8232-3CF7-4DF3-8D35-0B1EBED50B01}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA9F8232-3CF7-4DF3-8D35-0B1EBED50B01}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA9F8232-3CF7-4DF3-8D35-0B1EBED50B01}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA9F8232-3CF7-4DF3-8D35-0B1EBED50B01}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {086A2BA6-01AD-419B-9FD3-AAF8AF4B81E9}
+	EndGlobalSection
+EndGlobal
