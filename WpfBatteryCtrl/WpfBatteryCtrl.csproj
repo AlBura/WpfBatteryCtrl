@@ -48,6 +48,10 @@
     <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="BatteryCtrlNumber.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="BatteryCtrlSingleLine.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -63,6 +67,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseBatteryCtrl.cs" />
+    <Compile Include="BatteryCtrlNumber.xaml.cs">
+      <DependentUpon>BatteryCtrlNumber.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BatteryCtrlSingleLine.xaml.cs">
       <DependentUpon>BatteryCtrlSingleLine.xaml</DependentUpon>
     </Compile>

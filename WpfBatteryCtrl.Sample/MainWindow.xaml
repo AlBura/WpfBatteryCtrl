@@ -29,6 +29,10 @@
         <batCtrl:BatteryCtrlTwoLine Grid.Column="1" Grid.Row="1"  Value="{Binding ElementName=sliderValueT1,Path=Value}" Value2="{Binding ElementName=sliderValueT2,Path=Value}" BatteryOrientation="Vertical"></batCtrl:BatteryCtrlTwoLine>
 
 
+        <batCtrl:BatteryCtrlNumber Grid.Column="1" Grid.Row="3" FontSize="21" Value="{Binding ElementName=sliderValue,Path=Value}" BatteryOrientation="Vertical"></batCtrl:BatteryCtrlNumber>
+        <batCtrl:BatteryCtrlNumber Grid.Column="1" Grid.Row="4" FontSize="21" Value="{Binding ElementName=sliderValue,Path=Value}" BatteryOrientation="Horizontal"></batCtrl:BatteryCtrlNumber>
+
+
         <StackPanel Grid.Column="0" Grid.Row="4">
             <TextBox  Grid.Column="1" Grid.Row="2" Text="Value Single Batteries"></TextBox>
             <Slider Name="sliderValue" HorizontalAlignment="Stretch"   Minimum="0" Maximum="100"  SmallChange="5" Value="0"  VerticalAlignment="Center"/>
