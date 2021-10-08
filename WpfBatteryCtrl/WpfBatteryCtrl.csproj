@@ -62,6 +62,7 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BaseBatteryCtrl.cs" />
     <Compile Include="BatteryCtrlSingleLine.xaml.cs">
       <DependentUpon>BatteryCtrlSingleLine.xaml</DependentUpon>
     </Compile>
