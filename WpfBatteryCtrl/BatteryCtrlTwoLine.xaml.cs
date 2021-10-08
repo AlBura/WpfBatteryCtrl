@@ -18,7 +18,7 @@ using System.Windows.Shapes;
 ///   Namespace:      WpfBatteryCtrl
 ///   Class:          BatteryCtrlTwoLine
 ///   Description:    
-///   Author:         Alberto Buranello
+///   Author:         AlBura
 ///	  Date: 		  10/08/21 
 ///-----------------------------------------------------------------
 
