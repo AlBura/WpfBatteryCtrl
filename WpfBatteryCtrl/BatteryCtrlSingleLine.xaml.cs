@@ -19,7 +19,7 @@ using System.Windows.Shapes;
 ///   Class:          BatteryCtrlSingleLine
 ///   Description:    
 ///   Author:         Alberto Buranello
-///	  Date: 		  10/07/21 3:16:30 PM
+///	  Date: 		  10/07/21
 ///-----------------------------------------------------------------
 
 
@@ -30,9 +30,8 @@ namespace WpfBatteryCtrl
     /// </summary>
     public partial class BatteryCtrlSingleLine : UserControl
     {
-       
-        public static readonly DependencyProperty ValueProperty = 
-            DependencyProperty.Register("Value", typeof(double), typeof(BatteryCtrlSingleLine), new PropertyMetadata(0d,OnValueChanged));
+        public static readonly DependencyProperty ValueProperty =
+             DependencyProperty.Register("Value", typeof(double), typeof(BatteryCtrlSingleLine), new PropertyMetadata(0d, OnValueChanged));
 
         public static readonly DependencyProperty TickNumberProperty =
            DependencyProperty.Register("TickNumber", typeof(int), typeof(BatteryCtrlSingleLine), new PropertyMetadata(10, OnTickNumberChanged));
@@ -52,63 +51,49 @@ namespace WpfBatteryCtrl
         public static readonly DependencyProperty HighThresholdColorProperty =
             DependencyProperty.Register("HighThresholdColorProperty", typeof(SolidColorBrush), typeof(BatteryCtrlSingleLine), new PropertyMetadata(new SolidColorBrush(Colors.Green), OnColorChanged));
 
-
-
+        public static readonly DependencyProperty BatteryOrientationProperty =
+            DependencyProperty.Register("BatteryOrientationProperty", typeof(Orientation), typeof(BatteryCtrlSingleLine), new PropertyMetadata(Orientation.Horizontal, OnAlignementChanged));
 
 
         private const int MAXVALUE = 100;
+
+
         private List<Border> _listTicks = new List<Border>();
+
+        private Border _borderAround;
+        private Border _borderTop;
+        private Grid _gridTicks = new Grid();
 
         public BatteryCtrlSingleLine()
         {
             InitializeComponent();
+            DrawBatteryBody();
             DrawGridTick();
         }
-
-
-        private void DrawGridTick()
+        public Orientation BatteryOrientation
         {
-            tickGrid.Children.Clear();
-            tickGrid.ColumnDefinitions.Clear();
-            _listTicks.Clear();
-            int ticks = TickNumber;
-            for (int i =0; i<ticks; i++)
-                tickGrid.ColumnDefinitions.Add(new ColumnDefinition());
-      
-
-            for (int i = 0; i < ticks; i++)
-            {
-                Border b = new Border();
-                Grid.SetColumn(b, i);
-                b.HorizontalAlignment = HorizontalAlignment.Stretch;
-                b.VerticalAlignment = VerticalAlignment.Stretch;
-                b.Background = new SolidColorBrush(Colors.DarkGreen);
-                b.CornerRadius = new CornerRadius(1, 1, 1, 1);
-                b.Margin = new Thickness(0, 0, 1, 0);
-                b.Visibility = Visibility.Hidden;
-                tickGrid.Children.Add(b);
-                _listTicks.Add(b);
-            }
+            get => (Orientation)GetValue(BatteryOrientationProperty);
+            set => SetValue(BatteryOrientationProperty, value);
         }
 
 
         public double Value
         {
             get => (double)GetValue(ValueProperty);
-            set {
+            set
+            {
                 //wrap the value, the vlaue is in percentage 0-100
                 var v = (double)value;
                 if (v < 0.0) v = 0.0;
                 if (v > MAXVALUE) v = MAXVALUE;
-                SetValue(ValueProperty, v);     
-                }
+                SetValue(ValueProperty, v);
+            }
         }
         public int TickNumber
         {
             get => (int)GetValue(TickNumberProperty);
             set
             {
-                //wrap the value, 1-100
                 var v = (int)value;
                 if (v < 2) v = 2;
                 SetValue(TickNumberProperty, v);
@@ -160,6 +145,12 @@ namespace WpfBatteryCtrl
             var bcsl = (BatteryCtrlSingleLine)o;
             bcsl.DrawGridTick();
         }
+        private static void OnAlignementChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
+        {
+            var bcsl = (BatteryCtrlSingleLine)o;
+            bcsl.DrawBatteryBody();
+            bcsl.DrawGridTick();
+        }
 
 
         private static void OnColorChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
@@ -173,28 +164,153 @@ namespace WpfBatteryCtrl
             var bcsl = (BatteryCtrlSingleLine)o;
             bcsl.SetValue(ValueProperty, bcsl.Value);
         }
-
-
         private static void OnValueChanged(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             var bcsl = (BatteryCtrlSingleLine)o;
-            var val =(int)((double)e.NewValue);
+            bcsl.UpdateValue();
+        }
+        private void DrawBatteryBody()
+        {
+            Orientation align = this.BatteryOrientation;
+            MainStackPanel.Children.Clear();
 
-            int maxTicks = bcsl.TickNumber;
+            if (_borderAround != null)
+                _borderAround.Child = null;
+
+            var color = this.HighThresholdColor;
+            var thickness = new Thickness(2);
+            var padding = new Thickness(2);
+
+            var cornerRadiusAround = new CornerRadius(5);
+            var widthAround = 100.0;
+            var heightAround = 50.0;
+
+            var cornerRadiusTop = new CornerRadius(0, 2, 2, 0);
+            var widthTop = 7.0;
+            var heightTop = 20.0;
+            var marginTop = new Thickness(0, -2, 0, -2);
+
+            var cornerRadiusTopVertical = new CornerRadius(2, 2, 0, 0);
+            var marginTopVertical = new Thickness(-2, 0, -2, 0);
+
+            switch (align)
+            {
+                case Orientation.Horizontal:
+                    MainStackPanel.Orientation = Orientation.Horizontal;
+
+                    _borderAround = new Border();
+                    _borderAround.BorderBrush = color;
+                    _borderAround.BorderThickness = thickness;
+                    _borderAround.CornerRadius = cornerRadiusAround;
+                    _borderAround.Padding = padding;
+                    _borderAround.Width = widthAround;
+                    _borderAround.Height = heightAround;
+                    _borderAround.Child = _gridTicks;
+
+                    _borderTop = new Border();
+                    _borderTop.BorderBrush = color;
+                    _borderTop.Background = color;
+                    _borderTop.BorderThickness = thickness;
+                    _borderTop.CornerRadius = cornerRadiusTop;
+                    _borderTop.Padding = padding;
+                    _borderTop.Width = widthTop;
+                    _borderTop.Height = heightTop;
+                    _borderTop.Margin = marginTop;
+
+                    MainStackPanel.Children.Add(_borderAround);
+                    MainStackPanel.Children.Add(_borderTop);
+                    break;
+                case Orientation.Vertical:
+                    MainStackPanel.Orientation = Orientation.Vertical;
+                    _borderAround = new Border();
+                    _borderAround.BorderBrush = color;
+                    _borderAround.BorderThickness = thickness;
+                    _borderAround.CornerRadius = cornerRadiusAround;
+                    _borderAround.Padding = padding;
+                    _borderAround.Width = heightAround;//viceversa of horizontal
+                    _borderAround.Height = widthAround;//viceversa of horizontal
+                    _borderAround.Child = _gridTicks;
+
+                    _borderTop = new Border();
+                    _borderTop.BorderBrush = color;
+                    _borderTop.Background = color;
+                    _borderTop.BorderThickness = thickness;
+                    _borderTop.CornerRadius = cornerRadiusTopVertical;
+                    _borderTop.Padding = padding;
+                    _borderTop.Width = heightTop;//viceversa of horizontal
+                    _borderTop.Height = widthTop;//viceversa of horizontal
+                    _borderTop.Margin = marginTopVertical;
+
+                    MainStackPanel.Children.Add(_borderTop);
+                    MainStackPanel.Children.Add(_borderAround);
+
+                    break;
+            }
+        }
+
+
+
+
+        private void DrawGridTick()
+        {
+            _gridTicks.Children.Clear();
+            _gridTicks.ColumnDefinitions.Clear();
+            _listTicks.Clear();
+            int ticks = TickNumber;
+            bool isHorizontal = (this.BatteryOrientation == Orientation.Horizontal);
+            if (isHorizontal)
+            {
+                for (int i = 0; i < ticks; i++)
+                    _gridTicks.ColumnDefinitions.Add(new ColumnDefinition());
+            }
+            else
+            {
+                for (int i = 0; i < ticks; i++)
+                    _gridTicks.RowDefinitions.Add(new RowDefinition());
+            }
+
+
+
+            for (int i = 0; i < ticks; i++)
+            {
+                Border b = new Border();
+                if (isHorizontal)
+                    Grid.SetColumn(b, i);
+                else
+                    Grid.SetRow(b, ticks - i);
+
+                b.HorizontalAlignment = HorizontalAlignment.Stretch;
+                b.VerticalAlignment = VerticalAlignment.Stretch;
+                b.Background = new SolidColorBrush(Colors.DarkGreen);
+                b.CornerRadius = new CornerRadius(1, 1, 1, 1);
+                b.Margin = new Thickness(0, 0, 1, 0);
+                b.Visibility = Visibility.Hidden;
+                _gridTicks.Children.Add(b);
+                _listTicks.Add(b);
+            }
+        }
+
+
+
+
+
+        private void UpdateValue()
+        {
+            int val = ((int)Value);
+            int maxTicks = TickNumber;
             int tickToShow = val * maxTicks / MAXVALUE;
 
-            var list = bcsl._listTicks;
-            var limit1 = bcsl.LowThreshold;
-            var limit2 = bcsl.WarningThreshold;
+            var list = _listTicks;
+            var limit1 = LowThreshold;
+            var limit2 = WarningThreshold;
 
-            var color1 = bcsl.LowThresholdColor;
-            var color2 = bcsl.WarningThresholdColor;
-            var color3 = bcsl.HighThresholdColor;
-
+            var color1 = LowThresholdColor;
+            var color2 = WarningThresholdColor;
+            var color3 = HighThresholdColor;
 
             if (list.Count() < maxTicks) return;
 
-            for (int i= 0; i < maxTicks; i++)
+            for (int i = 0; i < maxTicks; i++)
             {
                 list[i].Visibility = (i < tickToShow) ? Visibility.Visible : Visibility.Hidden;
                 SolidColorBrush color = color3;
@@ -203,39 +319,12 @@ namespace WpfBatteryCtrl
                 else if (val < limit2)
                     color = color2;
 
-                bcsl.Border1.BorderBrush = color;
-                bcsl.Border2.Background = color;
+                _borderTop.BorderBrush = color;
+                _borderTop.Background = color;
+                _borderAround.BorderBrush = color;
                 list[i].Background = color;
-
             }
-                
-           
-
-
-
-
-
-
-
-
-
-
-
-
-      /*      SolidColorBrush scb =  new SolidColorBrush( Colors.Red);
-            li.Border1.BorderBrush = scb;
-            li.Border2.Background = scb;
-            li.Segment1.Background = scb;
-            li.Segment2.Background = scb;
-            li.Segment3.Background = scb;
-            li.Segment4.Background = scb;
-            li.Segment5.Background = scb;
-            li.Segment6.Background = scb;
-            li.Segment7.Background = scb;
-            li.Segment8.Background = scb;
-            li.Segment9.Background = scb;
-            li.Segment10.Background = scb;
-*/
         }
     }
+    
 }

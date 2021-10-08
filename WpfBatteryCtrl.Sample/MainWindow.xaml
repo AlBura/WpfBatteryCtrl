@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WpfBatteryCtrl.Sample"
         xmlns:batCtrl="clr-namespace:WpfBatteryCtrl;assembly=WpfBatteryCtrl" 
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="WPF Batteries User Control Sample" Height="450" Width="800">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="50*" />
@@ -22,15 +22,15 @@
 
         <batCtrl:BatteryCtrlSingleLine Grid.Column="0" Grid.Row="0"  Value="{Binding ElementName=sliderValue,Path=Value}" ></batCtrl:BatteryCtrlSingleLine>
         <batCtrl:BatteryCtrlSingleLine Grid.Column="0" Grid.Row="1"  Value="{Binding ElementName=sliderValue,Path=Value}" TickNumber="30" LowThresholdColor="Black" WarningThresholdColor="Orange" HighThresholdColor="Gray" LowThreshold="35" WarningThreshold="70"></batCtrl:BatteryCtrlSingleLine>
+        <batCtrl:BatteryCtrlSingleLine Grid.Column="0" Grid.Row="2"  Value="{Binding ElementName=sliderValue,Path=Value}" TickNumber="20" BatteryOrientation="Vertical"/>
+        <batCtrl:BatteryCtrlSingleLine Grid.Column="0" Grid.Row="3"  Value="{Binding ElementName=sliderValue,Path=Value}" TickNumber="80" BatteryOrientation="Vertical" />
 
 
 
         <StackPanel Grid.Column="0" Grid.Row="4">
             <TextBox Name="txtValue" Grid.Column="1" Grid.Row="2" Text="Value Single Batteries"></TextBox>
-
             <Slider Name="sliderValue" HorizontalAlignment="Stretch"   Minimum="0" Maximum="100"  SmallChange="5" Value="0"  VerticalAlignment="Center"/>
-
         </StackPanel>
-       
+
     </Grid>
 </Window>
