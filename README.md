@@ -22,3 +22,6 @@ Simple library to show the status of batteries using WPF and C#
 - Vertical/Horizontal orientation
 - Configurable number ticks
 - Changing color base thresholds 
+
+
+![Info](https://user-images.githubusercontent.com/2832841/136566915-9b9ad8d1-9133-4480-b585-570790a65e8c.JPG)
